@@ -119,26 +119,46 @@ function Affichertouslesabonnes(){
     let enregistrer_emprunt = {
         abonneId : find_id_follower ,
         Id_livre : find_id_liver ,
-        dateEmprunt : dateEmprunt
+        dateEmprunt : dateEmprunt.toLocaleDateString()
     }
+if(find_id_follower && find_id_liver){
+    
+    if(find_id_liver.Disponible){
+        find_id_liver.Disponible = false;
+        console.log(find_id_follower.nom +" a emprunté le livre "+find_id_liver.Titre);
+     }
+     emprunts.push(enregistrer_emprunt);
+}else{
+    console.log("c'est follower est introvable!!!")
+}
+   
 
-   if(emprunts.push(enregistrer_emprunt)) {
-    livers.forEach(liver => {
-         liver.Disponible = false;
-    });
-   };
-
-   }
-
-// ******************Afficher les livres empruntés par un abonné donné******************
-
-// function aff_livers_empruntes(){
-
-//     emprunts.forEach(emprunt => {
-//    emprunt.
         
-//     });
-// }
+    };
+
+// ******************enregistrer_un_emprunt******************
+
+function Enregistrer_un_retour(){
+    let follower_id = prompt('enter follower id : ');
+    let id_liver = prompt('enter liver id : ');
+
+    let find_id_follower = abonnes.find((follower) => follower.ID == follower_id );
+    let find_id_liver = livers.find((liver) => liver.Id_livre == id_liver);
+    if(find_id_follower && find_id_liver){
+        if(find_id_liver.Disponible){
+            find_id_liver.Disponible = true;
+            console.log(find_id_follower.nom +" a retourné le livre "+find_id_liver.Titre);
+            console.log("Le livre est maintenant disponible :", find_id_liver.Disponible);
+         }
+    }else{
+        console.log(
+            follower_id +" OU "+ id_liver
+             +" est introvable !!!"
+        )
+    }
+    
+        
+    }
 
 
 function menu(){
