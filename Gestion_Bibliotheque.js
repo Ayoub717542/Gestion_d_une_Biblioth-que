@@ -1,14 +1,10 @@
-// ******************************   e************************************
+// ******************************Gestion d’une Bibliothèque************************************
 const prompt = require("prompt-sync")();
 
-let livers = [
-    {Id_livre:1,Titre : "Book3",Auteur: "John",Annee_de_publication:2002,Disponible:false },
-    {Id_livre:2,Titre : "zook3",Auteur: "John",Annee_de_publication: 2032,Disponible:true },
-    {Id_livre:3,Titre : "sjer",Auteur: "John",Annee_de_publication: 2013,Disponible:true }
-];
+let livers = [];
 let emprunts = [];
 
-// *******Introduire un livre*******
+// *******Introduire un livre********
 
     function Introduireunlivre(){
         let Titre = prompt("donner un titre : ");
@@ -29,7 +25,7 @@ let emprunts = [];
  function Ajouter_plusieurs_livres(){
     let number_de_livers=prompt("Ajouter combien de livres tu veux ajouter :  ")
   for(let i = 0; i < number_de_livers ;i++){
-    return Introduireunlivre() 
+     Introduireunlivre() 
   }
 
  }
@@ -47,18 +43,19 @@ let emprunts = [];
 
  }
 function Trierleslivrespartitre(){
-    livers.sort((a,b) => a.Titre.localeCompare(b.Titre) )
+   console.log(livers.sort((a,b) => a.Titre.localeCompare(b.Titre) ))
+    
 } 
 
 function livres_par_annee_de_publication (){
-    livers.sort((a,b) => a.Annee_de_publication - b.Annee_de_publication )
+    console.log(livers.sort((a,b) => a.Annee_de_publication - b.Annee_de_publication ));
 } 
 
 
 function affich_uniquement_livers(){
     livers.forEach(book => {
         if(book.Disponible == true){
-            return console.log(" les livres disponibles est : "+book.Titre+"\n")
+             console.log(" les livres disponibles est : "+book.Titre+"\n")
         }
             
         
@@ -68,16 +65,21 @@ function affich_uniquement_livers(){
 
 function Rechercher(){
 let id = prompt("donner un liver ID pour Rechercher : ")
+let shown = false
     livers.forEach(book => {
-        if(book.Id_livre === id){
-            return console.log(" le liver chercher est : "+book.Titre+"\n")
+        if(book.Id_livre == id){
+            if(!shown){
+                console.log(" le liver chercher est : "+book.Titre+"\n")
+                shown= true;
+            }
         }
         
     });
+   
 }
 
 //  **********Gestion des abonnés ***************
-let abonnes = [{ID:1, nom : "ayoub",prenom: "hadi",email:"ayoubhadi3@gmail.com" }];
+let abonnes = [];
 
 function Ajouter_abboner(){
 
@@ -111,7 +113,7 @@ function Affichertouslesabonnes(){
 
     let abonneId =prompt("donner un abonner ID : ")
     let Id_livre =prompt("donner un liver ID : ")
-    let dateEmprunt =prompt("donner le date de emprunt : ")
+    let dateEmprunt = new Date()
 
     let find_id_follower = abonnes.find((follower) => follower.ID == abonneId );
     let find_id_liver = livers.find((liver) => liver.Id_livre == Id_livre );
@@ -121,44 +123,69 @@ function Affichertouslesabonnes(){
         Id_livre : find_id_liver ,
         dateEmprunt : dateEmprunt.toLocaleDateString()
     }
-if(find_id_follower && find_id_liver){
-    
-    if(find_id_liver.Disponible){
+
+   if(find_id_follower && find_id_liver) {
+   if(find_id_liver.Disponible){
         find_id_liver.Disponible = false;
         console.log(find_id_follower.nom +" a emprunté le livre "+find_id_liver.Titre);
      }
      emprunts.push(enregistrer_emprunt);
+
 }else{
     console.log("c'est follower est introvable!!!")
 }
-   
+   };
+  
 
-        
-    };
+ 
 
-// ******************enregistrer_un_emprunt******************
+// ******************Enregistrer_un_retour******************
 
 function Enregistrer_un_retour(){
-    let follower_id = prompt('enter follower id : ');
-    let id_liver = prompt('enter liver id : ');
 
-    let find_id_follower = abonnes.find((follower) => follower.ID == follower_id );
-    let find_id_liver = livers.find((liver) => liver.Id_livre == id_liver);
+    let abonner_id =prompt("Entre Abonner ID : ");
+    let id_liver =prompt("Entre liver ID : ");
+
+    let find_id_follower = abonnes.find((follower) => follower.ID == abonner_id);
+    let find_id_liver = livers.find((idliver) => idliver.Id_livre == id_liver);
+
     if(find_id_follower && find_id_liver){
-        if(find_id_liver.Disponible){
-            find_id_liver.Disponible = true;
-            console.log(find_id_follower.nom +" a retourné le livre "+find_id_liver.Titre);
-            console.log("Le livre est maintenant disponible :", find_id_liver.Disponible);
-         }
+        if(!find_id_liver.Disponible){
+         find_id_liver.Disponible = true ;
+         console.log("'"+find_id_follower.nom+"' a retourné le livre '"+find_id_liver.Titre+"'")
+         console.log("Le livre est maintenant disponible :", find_id_liver.Disponible);
+        }
+       
     }else{
         console.log(
-            follower_id +" OU "+ id_liver
+            abonner_id +" OU "+ id_liver
              +" est introvable !!!"
-        )
+        )}
+}  
+// ******************Afficher les livres empruntés par un abonné donné. ******************
+
+    function empruntes_livers(){
+        let abonner_id =prompt(" donner un abooner ID : ");
+        let find_id_follower = abonnes.find((follower) => follower.ID == abonner_id);
+        let shown = false;
+
+        emprunts.forEach(emprunt => {
+            
+            if(emprunt.abonneId == find_id_follower ){
+                if (!shown){
+            console.log("les livres empruntés par '"+find_id_follower.nom+"' est :")
+            shown =true;
+                }
+                console.log("'"+emprunt.Id_livre.Titre+"'")
+         
+        }
+        });
+
+
+
     }
-    
-        
-    }
+
+
 
 
 function menu(){
@@ -206,8 +233,10 @@ function menu3(){
 function menu4(){
     console.log("5. ================== Gestion des emprunts ===================")
     console.log('1. Enregistrer un emprunt.')
-    console.log('2. Afficher les livres empruntés par un abonné donné.')
-     let choises = prompt('Choisissez dans le menu =>  ');
+    console.log('2. Enregistrer un retour.')
+    console.log('3. Afficher les livres empruntés par un abonné donné.')
+    console.log('0. Quitter')
+    let choises = prompt('Choisissez dans le menu =>  ');
     return choises;
 }
 let m;
@@ -238,7 +267,7 @@ do{
          m2 = menu2();
                 switch (m2) {
                     case ('1'):
-                        Afficher_les_livres()
+                       console.log(Afficher_les_livres())
                         break;
                           case ('2'):
                         Trierleslivrespartitre()
@@ -274,16 +303,21 @@ do{
                             case ('1'):
                                 enregistrer_un_emprunt();
                                 break;
-                          }
-                            break;
-                                case ('0'):
-                                    console.log("fin !!")
-                                    break;
-    
-        default:
+                            case ('2'):
+                                Enregistrer_un_retour();
+                                break;
+                            case ('3'):
+                                empruntes_livers();
+                                break;
+                    case ('0'):
+                    console.log("fin !!")
+                     break;
+                }
+                 
+            default:
             console.log('errore')
             break;
     }
-}while(m != 0 || m2 != 0 || m3 != 0 || m4 != 0)
+}while( m4 != 0)
 }
 Bibliotheque()
