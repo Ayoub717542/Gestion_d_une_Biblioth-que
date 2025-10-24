@@ -43,19 +43,25 @@ let emprunts = [];
 
  }
 function Trierleslivrespartitre(){
-   console.log(livers.sort((a,b) => a.Titre.localeCompare(b.Titre) ))
+    let choise =prompt("Voulez-vous trier les livres par date de publication en ordre croissant ou décroissant ? (asc/desc) : ");
+    if (choise == "asc"){
+        console.log(livers.sort((a,b) => a.Titre.localeCompare(b.Titre) ))
+    }else if(choise =="desc"){
+        console.log(livers.sort((a,b) => b.Titre.localeCompare(a.Titre)))
+    }
+  
     
 } 
 
 function livres_par_annee_de_publication (){
-    console.log(livers.sort((a,b) => a.Annee_de_publication - b.Annee_de_publication ));
+    console.log(livers.sort((a,b) => b.Annee_de_publication - a.Annee_de_publication ));
 } 
 
 
 function affich_uniquement_livers(){
     livers.forEach(book => {
         if(book.Disponible == true){
-             console.log(" les livres disponibles est : "+book.Titre+"\n")
+             console.log(" les livres disponibles est : "+book.Titre+" par Auteur :"+book.Auteur)
         }
             
         
@@ -192,132 +198,103 @@ function menu(){
     console.log('=================================================================')
     console.log('================== Gestion d’une Bibliothèque ===================')
     console.log('=================================================================')
-    console.log('1. Introduire un livre. ')
-    console.log('2. Ajouter plusieurs livres. ')
-    console.log('3. ================ Opérations sur les livres =============')
-    console.log('1. Afficher tous les livres ')
-    console.log('2. Trier les livres par titre (ascendant/descendant).')
-    console.log('3. Trier les livres par année de publication. ')
-    console.log('4. Afficher uniquement les livres disponibles.')
-    console.log('5. Rechercher un livre par ID_livre.')
-    console.log("4. ================== Gestion des abonnés ====================")
-    console.log('1. Ajouter un abonné (ID, Nom, Prénom, Email).')
-    console.log('2. Afficher tous les abonnés.')
-    console.log("5. ================== Gestion des emprunts ===================")
-    console.log('1. Enregistrer un emprunt.')
-    console.log('2. Afficher les livres empruntés par un abonné donné.')
-    console.log('0. Quitter')
+    console.log('1. Opérations sur les livres : ')
+    console.log("2. Gestion des abonnés       : ")
+    console.log("3. Gestion des emprunts      : ")
+    console.log('0. Quitter ')
 
     let choises = prompt('Choisissez dans le menu =>  ');
     return choises;
 }
 
 function menu2(){
-    console.log('3. ================ Opérations sur les livres =============')
-    console.log('1. Afficher tous les livres ')
-    console.log('2. Trier les livres par titre (ascendant/descendant).')
-    console.log('3. Trier les livres par année de publication. ')
-    console.log('4. Afficher uniquement les livres disponibles.')
-    console.log('5. Rechercher un livre par ID_livre.')
+    console.log('  ================ Opérations sur les livres =============')
+    console.log('1. Introduire un livre. ')
+    console.log('2. Ajouter plusieurs livres. ')
+    console.log('3. Afficher tous les livres ')
+    console.log('4. Trier les livres par titre (ascendant/descendant).')
+    console.log('5. Trier les livres par année de publication. ')
+    console.log('6. Afficher uniquement les livres disponibles.')
+    console.log('7. Rechercher un livre par ID_livre.')
+    console.log('8. Retour <--- .')
     let choises = prompt('Choisissez dans le menu =>  ');
     return choises;
 }
 
 function menu3(){
-     console.log("4. ================== Gestion des abonnés ====================")
+     console.log("  ================== Gestion des abonnés ====================")
     console.log('1. Ajouter un abonné (ID, Nom, Prénom, Email).')
     console.log('2. Afficher tous les abonnés.')
+    console.log('3. Retour <--- .')
     let choises = prompt('Choisissez dans le menu =>  ');
     return choises;
 }
 function menu4(){
-    console.log("5. ================== Gestion des emprunts ===================")
+    console.log("   ================== Gestion des emprunts ===================")
     console.log('1. Enregistrer un emprunt.')
     console.log('2. Enregistrer un retour.')
     console.log('3. Afficher les livres empruntés par un abonné donné.')
-    console.log('0. Quitter')
+    console.log('4. Retour <--- .')
     let choises = prompt('Choisissez dans le menu =>  ');
     return choises;
 }
-let m;
-let m2;
-let m3;
-let m4;
+
+
 
 
 function Bibliotheque(){
 
-
-
+    let m;
+    
 do{
-    m = menu();
+   
+    m=menu();
 
     switch (m) {
-        case ('1'):
-                        // **************Introduire un livre*************
-                Introduireunlivre()
-            break;
-            case ('2'):
-                     // **************Ajouter plusieurs livres*************
-                Ajouter_plusieurs_livres()
-                break;
-                case ('3'):
-
-                    // **************Opérations sur les livres*************
-         m2 = menu2();
+        // ================ Opérations sur les livres =============
+                case ('1'): let m2 = menu2();
                 switch (m2) {
-                    case ('1'):
-                       console.log(Afficher_les_livres())
-                        break;
-                          case ('2'):
-                        Trierleslivrespartitre()
-                        break;
-                          case ('3'):
-                        livres_par_annee_de_publication ()
-                        break;
-                          case ('4'):
-                        affich_uniquement_livers();
-                        break;
-                        case ('5'):
-                        Rechercher();
-                        break;
+
+                    case ('1'):Introduireunlivre();break;
+                    case ('2'):Ajouter_plusieurs_livres();break;
+                    case ('3'):Afficher_les_livres();break;
+                    case ('4'):Trierleslivrespartitre();break;
+                    case ('5'):livres_par_annee_de_publication();break;
+                    case ('6'):affich_uniquement_livers();break;
+                    case ('7'):Rechercher();break;
+                    case ('8'):break;
+
                         }
-                    break;
-                    case ('4'): 
-                   // **************Gestion des abonnés***************
-                m3 = menu3();
+                break;
+                     // **************Gestion des abonnés***************
+                    case ('2'):let m3 = menu3();
                         switch (m3) {
-                            case ('1'):
-                                Ajouter_abboner();
-                                break;
-                             case ('2'):
-                                Affichertouslesabonnes();
-                                break;
+
+                            case ('1'):Ajouter_abboner();break;
+                            case ('2'):Affichertouslesabonnes();break;
+                            case ('3'):break;
                          }
                         break;
-                        case ('5'):
-
-                    // *************** Gestion des emprunts ***************
-                  m4 = menu4();
+                        // *************** Gestion des emprunts ***************
+                        case ('3'):let m4 =menu4();
                           switch (m4) {
-                            case ('1'):
-                                enregistrer_un_emprunt();
-                                break;
-                            case ('2'):
-                                Enregistrer_un_retour();
-                                break;
-                            case ('3'):
-                                empruntes_livers();
-                                break;
-                    case ('0'):
-                    console.log("fin !!")
-                     break;
-                }
-                 
+
+                            case ('1'):enregistrer_un_emprunt();break;
+                            case ('2'):Enregistrer_un_retour();break;
+                            case ('3'):empruntes_livers();break;
+                            case ('4'):break;
+                            
+                            }
+                             break;
+case ('0'):
+console.log("fin !!")
+break;      
             default:
             console.log('errore')
             break;
     }
-}while( m4 != 0)
+}while( m != 0)
 }
 Bibliotheque()
+
+
