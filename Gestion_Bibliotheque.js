@@ -19,6 +19,7 @@ let emprunts = [];
              Disponible : true
         }
         livers.push(addoneliver)
+        console.log("NOUVEAU LIVRE A ÉTÉ AJOUTÉ : ")
         return addoneliver
     }
 
@@ -43,7 +44,7 @@ let emprunts = [];
 
  }
 function Trierleslivrespartitre(){
-    let choise =prompt("Voulez-vous trier les livres par date de publication en ordre croissant ou décroissant ? (asc/desc) : ");
+    let choise =prompt("Voulez-vous trier les livres par letter en ordre croissant ou décroissant ? (asc/desc) : ");
     if (choise == "asc"){
         console.log(livers.sort((a,b) => a.Titre.localeCompare(b.Titre) ))
     }else if(choise =="desc"){
@@ -54,7 +55,13 @@ function Trierleslivrespartitre(){
 } 
 
 function livres_par_annee_de_publication (){
-    console.log(livers.sort((a,b) => b.Annee_de_publication - a.Annee_de_publication ));
+     let choise =prompt("Voulez-vous trier les livres par anne de publication en ordre croissant ou décroissant ? (asc/desc) : ");
+     if(choise == 'asc'){
+          console.log(livers.sort((a,b) => a.Annee_de_publication - b.Annee_de_publication ));
+     }else if ( choise == 'desc'){
+         console.log(livers.sort((a,b) => b.Annee_de_publication - a.Annee_de_publication ));
+     }
+   
 } 
 
 
@@ -298,3 +305,11 @@ break;
 Bibliotheque()
 
 
+function findbooktitre(titre){
+    for (let i=0 ; i<livers.length ;i++){
+        if ( livers[i].titre == titre ){
+            console.log(livers[i])
+        }
+    }
+}
+findbooktitre("")
